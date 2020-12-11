@@ -4,7 +4,7 @@
         <div class="box" style="border-bottom: 0px;">
             <div class="header">
                 <div class="fr">
-                    <a
+                    <a @click="goToUserPage"
                         ><img
                             :src="defaultAvatarLink"
                             height="73"
@@ -18,10 +18,11 @@
                 <h1>{{ item.title }}</h1>
 
                 <small class="gray"
-                    ><a>{{ item.user.username }}</a> ·
-                    <span title="2020-12-11 09:32:41 +08:00">{{
-                        this.formatDate(item.createdTime)
-                    }}</span>
+                    ><a @click="goToUserPage">{{
+                        item.user && item.user.username
+                    }}</a>
+                    ·
+                    <span>{{ this.formatDate(item.createdTime) }}</span>
                 </small>
             </div>
             <div class="cell">
@@ -115,6 +116,11 @@ export default {
     },
     methods: {
         formatDate,
+        goToUserPage() {
+            this.$router.push(
+                '/member/' + (this.item.user && this.item.user.id),
+            );
+        },
     },
     watch: {
         '$route.params.id': {

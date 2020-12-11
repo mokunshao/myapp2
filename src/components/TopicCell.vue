@@ -36,15 +36,11 @@
                                 ></strong
                             >
                             &nbsp;•&nbsp;
-                            <span title="2020-11-12 22:15:11 +08:00">{{
-                                this.formatDate(item.createdTime)
-                            }}</span>
+                            <span>{{ this.formatDate(item.createdTime) }}</span>
                         </span>
                         <span class="topic_info" v-if="noImage"
                             ><div class="votes"></div>
-                            <span title="2020-11-12 22:15:11 +08:00">{{
-                                this.formatDate(item.createdTime)
-                            }}</span>
+                            <span>{{ this.formatDate(item.createdTime) }}</span>
                         </span>
                     </td>
                 </tr>

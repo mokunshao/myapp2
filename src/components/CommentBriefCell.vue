@@ -8,16 +8,17 @@
                             style="padding: 10px 15px 8px 15px; font-size: 12px; text-align: left;"
                         >
                             <div class="fr">
-                                <span
-                                    class="fade"
-                                    title="2020-12-03 17:34:53 +08:00"
-                                    >{{ formatDate(item.createdTime) }}</span
-                                >
+                                <span class="fade">{{
+                                    formatDate(item.createdTime)
+                                }}</span>
                             </div>
                             <span class="gray"
                                 >回复了主题
                                 <span class="chevron"> › </span>
-                                <a>{{ item.topic.title }}</a></span
+                                <a
+                                    @click="$router.push('/t/' + item.topic.id)"
+                                    >{{ item.topic.title }}</a
+                                ></span
                             >
                         </td>
                     </tr>

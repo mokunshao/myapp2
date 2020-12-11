@@ -6,7 +6,9 @@
                 <div class="fr">
                     <a href="/member/nutting"
                         ><img
-                            src="https://cdn.v2ex.com/avatar/6b8a/1cb4/180793_large.png?m=1490326738"
+                            :src="defaultAvatarLink"
+                            height="73"
+                            width="73"
                             class="avatar"
                             border="0"
                             align="default"
@@ -41,7 +43,9 @@
                         <tr>
                             <td width="48" valign="top" align="center">
                                 <img
-                                    src="https://cdn.v2ex.com/gravatar/803241d315f32e71819cf408b6751903?s=48&amp;d=retro"
+                                    :src="defaultAvatarLink"
+                                    height="48"
+                                    width="48"
                                     class="avatar"
                                     border="0"
                                     align="default"
@@ -102,3 +106,14 @@
         </div>
     </div>
 </template>
+
+<script>
+import { defaultAvatarLink } from '../settings';
+export default {
+    data() {
+        return {
+            defaultAvatarLink,
+        };
+    },
+};
+</script>

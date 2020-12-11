@@ -9,7 +9,7 @@
                             <td width="48" valign="top">
                                 <a
                                     ><img
-                                        src="https://cdn.v2ex.com/gravatar/6b8d978e37b2739e9406a2365d666a0c?s=48&amp;d=retro"
+                                        :src="defaultAvatarLink"
                                         class="avatar"
                                         border="0"
                                         align="default"
@@ -34,7 +34,7 @@
                     <tbody>
                         <tr>
                             <td width="28">
-                                <a href="/new"
+                                <a @click="goToPub"
                                     ><img
                                         src="https:www.v2ex.com/static/img/essentials/compose.png?v=b9e1f045f4ad639733bf9f6dbc62ed4c"
                                         width="28"
@@ -44,7 +44,7 @@
                             </td>
                             <td width="10"></td>
                             <td width="auto" valign="middle" align="left">
-                                <a href="/new">创作新主题</a>
+                                <a @click="goToPub">创作新主题</a>
                             </td>
                         </tr>
                     </tbody>
@@ -55,10 +55,19 @@
 </template>
 
 <script>
+import { defaultAvatarLink } from '../settings';
 export default {
+    data() {
+        return {
+            defaultAvatarLink,
+        };
+    },
     methods: {
         jumpToMemberPage() {
             this.$router.push('/member');
+        },
+        goToPub() {
+            this.$router.push('/pub');
         },
     },
 };

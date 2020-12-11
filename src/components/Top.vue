@@ -1,36 +1,28 @@
 <template>
     <div id="Top">
         <div class="content">
-            <div class="site-nav">
-                <a
-                    @click="$router.push('/')"
-                    name="top"
-                    title="way to explore"
-                    ><div id="Logo"></div
-                ></a>
-                <div id="search-container">
-                    <input
-                        id="search"
-                        type="text"
-                        maxlength="128"
-                        autocomplete="off"
-                        tabindex="1"
-                    />
-                    <div id="search-result" class="box"></div>
-                </div>
+            <div class="site-nav" :style="{ paddingTop: '10px' }">
+                <a @click="$router.push('/')" name="top" title="way to explore"
+                    ><strong>小论坛</strong></a
+                >
+
                 <div class="tools">
-                    <a href="/login" class="top">login</a>
-                    <a href="/home" class="top">home</a>
-                    <a href="/register" class="top">register</a>
-                    <a href="/ttodo" class="top">TODO</a>
-                    <a
-                        href="#;"
-                        onclick="if (confirm('确定要从 V2EX 登出？')) { location.href= '/signout?once=80588'; }"
-                        class="top"
-                        >登出</a
-                    >
+                    <a @click="$router.push('/login')" class="top">登录</a>
+                    <a @click="$router.push('/register')" class="top">注册</a>
+                    <a @click="$router.push('/settings')" class="top">设置</a>
+                    <a @click="logout" class="top">登出</a>
                 </div>
             </div>
         </div>
     </div>
 </template>
+
+<script>
+export default {
+    methods: {
+        logout() {
+            console.log('logout 123');
+        },
+    },
+};
+</script>

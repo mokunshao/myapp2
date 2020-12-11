@@ -1,5 +1,6 @@
 <template>
     <div id="Top">
+        {{ user }}
         <div class="content">
             <div class="site-nav" :style="{ paddingTop: '10px' }">
                 <a @click="$router.push('/')" name="top" title="way to explore"
@@ -18,7 +19,12 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
+
 export default {
+    computed: mapState({
+        user: (state) => state.user,
+    }),
     methods: {
         logout() {
             console.log('logout 123');

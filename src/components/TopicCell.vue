@@ -3,7 +3,7 @@
         <table cellpadding="0" cellspacing="0" border="0" width="100%">
             <tbody>
                 <tr>
-                    <td width="48" valign="top" align="center">
+                    <td width="48" valign="top" align="center" v-if="!noImage">
                         <a @click="$router.push('/member/' + item.userId)"
                             ><img
                                 width="48"
@@ -25,7 +25,7 @@
                             ></span
                         >
                         <div class="sep5"></div>
-                        <span class="topic_info"
+                        <span class="topic_info" v-if="!noImage"
                             ><div class="votes"></div>
                             <strong
                                 ><a
@@ -36,6 +36,12 @@
                                 ></strong
                             >
                             &nbsp;•&nbsp;
+                            <span title="2020-11-12 22:15:11 +08:00">{{
+                                this.formatDate(item.createdTime)
+                            }}</span>
+                        </span>
+                        <span class="topic_info" v-if="noImage"
+                            ><div class="votes"></div>
                             <span title="2020-11-12 22:15:11 +08:00">{{
                                 this.formatDate(item.createdTime)
                             }}</span>
@@ -58,6 +64,9 @@ export default {
         };
     },
     props: {
+        noImage: {
+            type: Boolean,
+        },
         item: {
             type: Object,
             default: function() {

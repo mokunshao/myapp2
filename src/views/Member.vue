@@ -50,42 +50,11 @@
         <div class="sep20"></div>
         <div class="box">
             <div class="cell"><span class="gray">ta 最近回复了</span></div>
-            <div v-for="o in topicComments" :key="o.id">
-                <div class="dock_area">
-                    <table
-                        cellpadding="0"
-                        cellspacing="0"
-                        border="0"
-                        width="100%"
-                    >
-                        <tbody>
-                            <tr>
-                                <td
-                                    style="padding: 10px 15px 8px 15px; font-size: 12px; text-align: left;"
-                                >
-                                    <div class="fr">
-                                        <span
-                                            class="fade"
-                                            title="2020-12-03 17:34:53 +08:00"
-                                            >{{
-                                                formatDate(o.createdTime)
-                                            }}</span
-                                        >
-                                    </div>
-                                    <span class="gray"
-                                        >回复了主题
-                                        <span class="chevron"> › </span>
-                                        <a>{{ o.topic.title }}</a></span
-                                    >
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="inner">
-                    <div class="reply_content">{{ o.content }}</div>
-                </div>
-            </div>
+            <CommentBriefCell
+                v-for="o in topicComments"
+                :key="o.id"
+                :item="o"
+            />
             <div class="inner">
                 <span class="chevron">»</span>
                 <a @click="$router.push('/member/comments/' + userData.id)"
@@ -97,6 +66,7 @@
 </template>
 
 <script>
+import CommentBriefCell from '../components/CommentBriefCell';
 import TopicCell from '../components/TopicCell';
 import { defaultAvatarLink } from '../settings';
 import {
@@ -117,6 +87,7 @@ export default {
     },
     components: {
         TopicCell,
+        CommentBriefCell,
     },
     watch: {
         '$route.params.id': {

@@ -3,7 +3,6 @@
         <div class="sep20"></div>
         <div class="box">
             <div class="header">
-                <a href="/">V2EX</a>
                 <span class="chevron">&nbsp;›&nbsp;</span> 登录 &nbsp;
                 <li class="fa fa-lock"></li>
             </div>

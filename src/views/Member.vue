@@ -36,7 +36,7 @@
             <TopicCell />
             <div class="inner">
                 <span class="chevron">»</span>
-                <a href="/member/nutting/topics">nutting 创建的更多主题</a>
+                <a>nutting 创建的更多主题</a>
             </div>
         </div>
         <div class="sep20"></div>
@@ -59,7 +59,7 @@
                                 <span class="gray"
                                     >回复了主题
                                     <span class="chevron"> › </span>
-                                    <a href="/t/731831#reply56"
+                                    <a
                                         >看了有位兄弟月化
                                         5%被群嘲了，来点实际的，讨论下哪些理财方案可以接近年化
                                         10-15%</a
@@ -75,7 +75,7 @@
             </div>
             <div class="inner">
                 <span class="chevron">»</span>
-                <a href="/member/nutting/replies">nutting 创建的更多回复</a>
+                <a>nutting 创建的更多回复</a>
             </div>
         </div>
     </div>

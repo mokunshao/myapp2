@@ -55,10 +55,7 @@
                                     &nbsp;&nbsp; <span class="no">1</span>
                                 </div>
                                 <div class="sep3"></div>
-                                <strong
-                                    ><a href="/member/614457662" class="dark"
-                                        >614457662</a
-                                    ></strong
+                                <strong><a class="dark">614457662</a></strong
                                 >&nbsp; &nbsp;<span class="ago">{{
                                     item.createdTime
                                 }}</span>

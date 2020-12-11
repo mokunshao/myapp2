@@ -4,7 +4,7 @@
             <tbody>
                 <tr>
                     <td width="48" valign="top" align="center">
-                        <a href="/member/jimiy"
+                        <a @click="$router.push('/member/' + item.userId)"
                             ><img
                                 width="48"
                                 height="48"
@@ -27,10 +27,13 @@
                         <div class="sep5"></div>
                         <span class="topic_info"
                             ><div class="votes"></div>
-                            <!-- <a class="node" href="/go/qna">问与答</a>
-                            &nbsp;•&nbsp; -->
                             <strong
-                                ><a>{{ item.user.username }}</a></strong
+                                ><a
+                                    @click="
+                                        $router.push('/member/' + item.userId)
+                                    "
+                                    >{{ item.user.username }}</a
+                                ></strong
                             >
                             &nbsp;•&nbsp;
                             <span title="2020-11-12 22:15:11 +08:00">{{

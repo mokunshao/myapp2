@@ -7,7 +7,7 @@
                     <tbody>
                         <tr>
                             <td width="48" valign="top">
-                                <a
+                                <a @click="jumpToMemberPage"
                                     ><img
                                         :src="defaultAvatarLink"
                                         class="avatar"
@@ -91,7 +91,7 @@ export default {
     },
     methods: {
         jumpToMemberPage() {
-            this.$router.push('/member');
+            this.$router.push('/member/' + this.user.id);
         },
         goToPub() {
             this.$router.push('/pub');

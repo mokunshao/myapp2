@@ -30,11 +30,6 @@
                 >
             </div>
             <TopicCell v-for="item in topicList" :item="item" :key="item.id" />
-            <!-- <div class="inner">
-                <span class="chevron">»</span> &nbsp;<a href="/recent"
-                    >更多新主题</a
-                >
-            </div> -->
         </div>
     </div>
 </template>

@@ -116,13 +116,19 @@ export default {
     methods: {
         formatDate,
     },
-    mounted() {
-        const id = this.$route.params.id;
-        apiGetTopicDetail(id).then((res) => {
-            if (res?.data) {
-                this.item = res.data;
-            }
-        });
+    watch: {
+        '$route.params.id': {
+            immediate: true,
+            handler(id, old) {
+                if (id) {
+                    apiGetTopicDetail(id).then((res) => {
+                        if (res?.data) {
+                            this.item = res.data;
+                        }
+                    });
+                }
+            },
+        },
     },
 };
 </script>

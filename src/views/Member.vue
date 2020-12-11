@@ -42,7 +42,9 @@
             <TopicCell v-for="o in topics" :key="o.id" :item="o" noImage />
             <div class="inner">
                 <span class="chevron">»</span>
-                <a>ta 创建的更多主题</a>
+                <a @click="$router.push('/member/topics/' + userData.id)"
+                    >ta 创建的更多主题</a
+                >
             </div>
         </div>
         <div class="sep20"></div>
@@ -86,7 +88,9 @@
             </div>
             <div class="inner">
                 <span class="chevron">»</span>
-                <a>ta 创建的更多回复</a>
+                <a @click="$router.push('/member/comments/' + userData.id)"
+                    >ta 创建的更多回复</a
+                >
             </div>
         </div>
     </div>
@@ -106,7 +110,7 @@ export default {
     data() {
         return {
             defaultAvatarLink,
-            userData: '',
+            userData: {},
             topics: [],
             topicComments: [],
         };
@@ -114,23 +118,29 @@ export default {
     components: {
         TopicCell,
     },
-    mounted() {
-        const id = this.$route.params.id;
-        apiGetUserInfo(id).then((res) => {
-            if (res?.data) {
-                this.userData = res.data;
-            }
-        });
-        apiGetUserSomeTopic(id).then((res) => {
-            if (res?.data) {
-                this.topics = res.data;
-            }
-        });
-        apiGetUserSomeTopicComment(id).then((res) => {
-            if (res?.data) {
-                this.topicComments = res.data;
-            }
-        });
+    watch: {
+        '$route.params.id': {
+            immediate: true,
+            handler(id, old) {
+                if (id) {
+                    apiGetUserInfo(id).then((res) => {
+                        if (res?.data) {
+                            this.userData = res.data;
+                        }
+                    });
+                    apiGetUserSomeTopic(id).then((res) => {
+                        if (res?.data) {
+                            this.topics = res.data;
+                        }
+                    });
+                    apiGetUserSomeTopicComment(id).then((res) => {
+                        if (res?.data) {
+                            this.topicComments = res.data;
+                        }
+                    });
+                }
+            },
+        },
     },
     methods: {
         formatDate,

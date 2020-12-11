@@ -29,6 +29,26 @@ const routes = [
             import(/* webpackChunkName: "about" */ '../views/Member.vue'),
     },
     {
+        path: '/member/topics/:id',
+        name: 'MemberTopics',
+        // route level code-splitting
+        // this generates a separate chunk (about.[hash].js) for this route
+        // which is lazy-loaded when the route is visited.
+        component: () =>
+            import(/* webpackChunkName: "about" */ '../views/MemberTopics.vue'),
+    },
+    {
+        path: '/member/comments/:id',
+        name: 'MemberComments',
+        // route level code-splitting
+        // this generates a separate chunk (about.[hash].js) for this route
+        // which is lazy-loaded when the route is visited.
+        component: () =>
+            import(
+                /* webpackChunkName: "about" */ '../views/MemberComments.vue'
+            ),
+    },
+    {
         path: '/t/:id',
         name: 'Topic',
         // route level code-splitting

@@ -76,7 +76,7 @@ export const apiPostComment = (topicId, content) => {
     });
 };
 
-export const apigetComments = (topicId) => {
+export const apiGetComments = (topicId) => {
     return axios.get('/topic_comment/' + topicId);
 };
 
@@ -123,5 +123,3 @@ export const apiGetTopicCommentsByUserId = (id) => {
 export const apiGetAllBoardName = () => {
     return axios.get('/board/all');
 };
-
-

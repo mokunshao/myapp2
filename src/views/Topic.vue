@@ -34,41 +34,55 @@
             </div>
         </div>
         <div class="sep20"></div>
-        <div class="box">
-            <div id="r_9909738" class="cell">
-                <table cellpadding="0" cellspacing="0" border="0" width="100%">
-                    <tbody>
-                        <tr>
-                            <td width="48" valign="top" align="center">
-                                <img
-                                    :src="defaultAvatarLink"
-                                    height="48"
-                                    width="48"
-                                    class="avatar"
-                                    border="0"
-                                    align="default"
-                                    alt="614457662"
-                                />
-                            </td>
-                            <td width="10" valign="top"></td>
-                            <td width="auto" valign="top" align="left">
-                                <div class="fr">
-                                    &nbsp;&nbsp; <span class="no">1</span>
-                                </div>
-                                <div class="sep3"></div>
-                                <strong><a class="dark">614457662</a></strong
-                                >&nbsp; &nbsp;<span class="ago">{{
-                                    item.createdTime
-                                }}</span>
-                                <div class="sep5"></div>
-                                <div class="reply_content">ssd 的原因？</div>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+        <div v-if="comments.length">
+            <div class="box">
+                <div v-for="o in comments" :key="o.id" class="cell">
+                    <table
+                        cellpadding="0"
+                        cellspacing="0"
+                        border="0"
+                        width="100%"
+                    >
+                        <tbody>
+                            <tr>
+                                <td width="48" valign="top" align="center">
+                                    <img
+                                        :src="defaultAvatarLink"
+                                        height="48"
+                                        width="48"
+                                        class="avatar"
+                                        border="0"
+                                        align="default"
+                                        alt="614457662"
+                                    />
+                                </td>
+                                <td width="10" valign="top"></td>
+                                <td width="auto" valign="top" align="left">
+                                    <div class="fr">
+                                        &nbsp;&nbsp; <span class="no">1</span>
+                                    </div>
+                                    <div class="sep3"></div>
+                                    <strong
+                                        ><a class="dark">{{
+                                            o.user && o.user.username
+                                        }}</a></strong
+                                    >&nbsp; &nbsp;<span class="ago">{{
+                                        o.createdTime
+                                    }}</span>
+                                    <div class="sep5"></div>
+                                    <div
+                                        class="reply_content"
+                                        v-text="o.content"
+                                    ></div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
+            <div class="sep20"></div>
         </div>
-        <div class="sep20"></div>
+
         <div class="box" id="reply-box" stuck="">
             <div class="cell flex-one-row">
                 <div>添加一条新回复</div>
@@ -104,7 +118,7 @@
 
 <script>
 import { defaultAvatarLink } from '../settings';
-import { apiGetTopicDetail } from '../service';
+import { apiGetTopicDetail, apiGetComments } from '../service';
 import { formatDate } from '../utils';
 
 export default {
@@ -112,6 +126,7 @@ export default {
         return {
             defaultAvatarLink,
             item: {},
+            comments: [],
         };
     },
     methods: {
@@ -130,6 +145,11 @@ export default {
                     apiGetTopicDetail(id).then((res) => {
                         if (res?.data) {
                             this.item = res.data;
+                        }
+                    });
+                    apiGetComments(id).then((res) => {
+                        if (res?.data) {
+                            this.comments = res.data;
                         }
                     });
                 }

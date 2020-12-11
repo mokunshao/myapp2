@@ -47,6 +47,14 @@ export default {
 a {
     cursor: pointer;
 }
+#app {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+#Wrapper {
+    flex: 1;
+}
 // #app {
 //     font-family: Avenir, Helvetica, Arial, sans-serif;
 //     -webkit-font-smoothing: antialiased;

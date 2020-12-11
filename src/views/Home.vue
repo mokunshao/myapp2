@@ -29,13 +29,12 @@
                     >{{ board.name }}</a
                 >
             </div>
-
-            <TopicCell />
-            <div class="inner">
+            <TopicCell v-for="item in topicList" :item="item" :key="item.id" />
+            <!-- <div class="inner">
                 <span class="chevron">»</span> &nbsp;<a href="/recent"
                     >更多新主题</a
                 >
-            </div>
+            </div> -->
         </div>
     </div>
 </template>
@@ -43,8 +42,14 @@
 <script>
 import { mapState } from 'vuex';
 import TopicCell from '../components/TopicCell';
+import { apiGetTopics } from '../service';
 
 export default {
+    data() {
+        return {
+            topicList: [],
+        };
+    },
     computed: mapState({
         boards: (state) => state.boards,
         checkedBoardId: (state) => state.checkedBoardId,
@@ -55,6 +60,18 @@ export default {
     methods: {
         changeBoard(boardId) {
             this.$store.commit('setCheckedBoardId', boardId);
+        },
+    },
+    watch: {
+        checkedBoardId: {
+            handler(newName, oldName) {
+                apiGetTopics(newName).then((res) => {
+                    if (res?.data) {
+                        this.topicList = res.data;
+                    }
+                });
+            },
+            immediate: true,
         },
     },
 };

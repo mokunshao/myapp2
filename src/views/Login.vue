@@ -6,7 +6,6 @@
                 登录
             </div>
             <div class="cell">
-                <!-- <form method="post" action="/signin"> -->
                 <table cellpadding="5" cellspacing="0" border="0" width="100%">
                     <tbody>
                         <tr>
@@ -60,6 +59,7 @@
 
 <script>
 import { apiLogin } from '../service';
+import { localSave } from '../utils';
 export default {
     data() {
         return {
@@ -69,12 +69,18 @@ export default {
     },
     methods: {
         doLogin() {
-            apiLogin(this.username, this.password).then((res) => {
-                console.log(res);
-                if (res?.data) {
-                    this.$store.commit('setUser', res.data);
-                }
-            });
+            if (!this.username && !this.password) {
+                alert('请输入用户名和密码');
+            } else {
+                apiLogin(this.username, this.password).then((res) => {
+                    if (res?.data) {
+                        const user = res.data;
+                        this.$store.commit('setUser', user);
+                        localSave('user', user);
+                        this.$router.push('/');
+                    }
+                });
+            }
         },
     },
 };

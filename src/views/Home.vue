@@ -3,10 +3,31 @@
         <div class="sep20"></div>
         <div class="box">
             <div class="inner" id="Tabs">
-                <a href="/?tab=tech" class="tab_current">全部</a>
-                <a href="/?tab=tech" class="tab">技术</a
-                ><a href="/?tab=creative" class="tab">创意</a
-                ><a href="/?tab=play" class="tab">好玩</a>
+                <a
+                    key="all"
+                    href="#"
+                    @click="
+                        (e) => {
+                            e.preventDefault();
+                            changeBoard('all');
+                        }
+                    "
+                    :class="checkedBoardId === 'all' ? 'tab_current' : 'tab'"
+                    >全部</a
+                >
+                <a
+                    v-for="board in boards"
+                    :key="board.id"
+                    href="#"
+                    @click="
+                        (e) => {
+                            e.preventDefault();
+                            changeBoard(board.id);
+                        }
+                    "
+                    :class="checkedBoardId === board.id ? 'tab_current' : 'tab'"
+                    >{{ board.name }}</a
+                >
             </div>
 
             <TopicCell />
@@ -20,11 +41,21 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
 import TopicCell from '../components/TopicCell';
 
 export default {
+    computed: mapState({
+        boards: (state) => state.boards,
+        checkedBoardId: (state) => state.checkedBoardId,
+    }),
     components: {
         TopicCell,
+    },
+    methods: {
+        changeBoard(boardId) {
+            this.$store.commit('setCheckedBoardId', boardId);
+        },
     },
 };
 </script>

@@ -3,34 +3,82 @@
         <div class="sep20"></div>
         <div class="box">
             <div class="header">
-                <a href="/">V2EX</a>
-                <span class="chevron">&nbsp;›&nbsp;</span> 注册新用户
+                注册新用户
             </div>
             <div class="cell">
-                <div class="topic_content markdown_body">
-                    <p>欢迎来到 V2EX，这里是创意工作者的数字化公共空间。</p>
-                    <p>你可以通过以下方式注册成为新用户。</p>
-                    <p>
-                        如果你之前已经使用电子邮件注册，那么请从
-                        <a href="/signin">这里</a> 登入。
-                    </p>
-                </div>
-            </div>
-            <div class="dock_area">
-                <div class="signup_methods">
-                    <div
-                        class="signup_method"
-                        onclick="location.href = '/auth/google?once=82393'"
-                    >
-                        <div
-                            class="signup_method_icon signup_method_google"
-                        ></div>
-                        <div class="signup_method_label">
-                            Continue with Google
-                        </div>
-                    </div>
-                </div>
+                <table cellpadding="5" cellspacing="0" border="0" width="100%">
+                    <tbody>
+                        <tr>
+                            <td width="120" align="right">用户名</td>
+                            <td width="auto" align="left">
+                                <input
+                                    v-model="username"
+                                    type="text"
+                                    class="sl"
+                                    name="username"
+                                    value=""
+                                    autofocus="autofocus"
+                                    autocorrect="off"
+                                    spellcheck="false"
+                                    autocapitalize="off"
+                                />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="120" align="right">密码</td>
+                            <td width="auto" align="left">
+                                <input
+                                    v-model="password"
+                                    type="password"
+                                    class="sl"
+                                    name="password"
+                                    value=""
+                                    autocorrect="off"
+                                    spellcheck="false"
+                                    autocapitalize="off"
+                                />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="120" align="right"></td>
+                            <td width="auto" align="left">
+                                <input
+                                    @click="doRegister"
+                                    type="button"
+                                    class="super normal button"
+                                    value="注册"
+                                />
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
 </template>
+
+<script>
+import { apiRegister } from '../service';
+export default {
+    data() {
+        return {
+            username: '',
+            password: '',
+        };
+    },
+    methods: {
+        doRegister() {
+            if (!this.username && !this.password) {
+                alert('请输入用户名和密码');
+            } else {
+                apiRegister(this.username, this.password).then((res) => {
+                    if (res?.status === 200) {
+                        alert('注册成功');
+                        this.$router.push('/login');
+                    }
+                });
+            }
+        },
+    },
+};
+</script>

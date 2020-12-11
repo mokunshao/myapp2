@@ -123,3 +123,5 @@ export const apiGetTopicCommentsByUserId = (id) => {
 export const apiGetAllBoardName = () => {
     return axios.get('/board/all');
 };
+
+

@@ -20,12 +20,25 @@
 import Top from './components/Top';
 import SideBar from './components/SideBar';
 import Bottom from './components/Bottom';
+import { apiGetAllBoardName } from './service';
+import { localGet } from './utils';
 
 export default {
     components: {
         Top,
         SideBar,
         Bottom,
+    },
+    mounted() {
+        const user = localGet('user');
+        if (user) {
+            this.$store.commit('setUser', user);
+        }
+        apiGetAllBoardName().then((res) => {
+            if (res?.data) {
+                this.$store.commit('setBoards', res.data);
+            }
+        });
     },
 };
 </script>

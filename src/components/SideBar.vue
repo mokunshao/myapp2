@@ -1,7 +1,7 @@
 <template>
     <div id="Rightbar">
         <div class="sep20"></div>
-        <div class="box">
+        <div class="box" v-if="user.id">
             <div class="cell">
                 <table cellpadding="0" cellspacing="0" border="0" width="100%">
                     <tbody>
@@ -20,7 +20,9 @@
                             <td width="10" valign="top"></td>
                             <td width="auto" align="left">
                                 <span class="bigger"
-                                    ><a @click="jumpToMemberPage">xxx</a></span
+                                    ><a @click="jumpToMemberPage">{{
+                                        user.username
+                                    }}</a></span
                                 >
                             </td>
                         </tr>
@@ -50,12 +52,38 @@
                 </table>
             </div>
         </div>
+        <div class="box" v-else>
+            <div class="cell">
+                <strong>欢迎你来到这里</strong>
+                <div class="sep5"></div>
+                <span class="fade">这是一个关于分享和探索的地方</span>
+            </div>
+            <div class="inner">
+                <div class="sep5"></div>
+                <div align="center">
+                    <a
+                        @click="$router.push('/register')"
+                        class="super normal button"
+                        >现在注册</a
+                    >
+                    <div class="sep5"></div>
+                    <div class="sep10"></div>
+                    已注册用户请 &nbsp;<a @click="$router.push('/login')"
+                        >登录</a
+                    >
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 
 <script>
+import { mapState } from 'vuex';
 import { defaultAvatarLink } from '../settings';
 export default {
+    computed: mapState({
+        user: (state) => state.user,
+    }),
     data() {
         return {
             defaultAvatarLink,

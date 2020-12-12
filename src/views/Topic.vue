@@ -44,7 +44,7 @@
                         type="button"
                         value="编辑"
                         class="super normal button"
-                        @click="modifyPost(item.id)"
+                        @click="modifyPost(item)"
                     />
                 </div>
             </div>
@@ -52,7 +52,7 @@
         <div class="sep20"></div>
         <div v-if="comments.length">
             <div class="box">
-                <div v-for="o in comments" :key="o.id" class="cell">
+                <div v-for="(o, key) in comments" :key="o.id" class="cell">
                     <table
                         cellpadding="0"
                         cellspacing="0"
@@ -81,7 +81,8 @@
                                 <td width="10" valign="top"></td>
                                 <td width="auto" valign="top" align="left">
                                     <div class="fr">
-                                        &nbsp;&nbsp; <span class="no">1</span>
+                                        &nbsp;&nbsp;
+                                        <span class="no">{{ key + 1 }}</span>
                                     </div>
                                     <div class="sep3"></div>
                                     <strong
@@ -115,7 +116,7 @@
                                             type="button"
                                             value="编辑"
                                             class="super normal button"
-                                            @click="modifyComment(o.id)"
+                                            @click="modifyComment(o)"
                                         />
                                     </div>
                                 </td>
@@ -154,6 +155,36 @@
                 />
             </div>
         </div>
+        <Modal v-show="showModal" @close="close" @confirm="confirm">
+            <template slot="header">
+                <div v-if="editingMode === 'comment'">编辑评论</div>
+                <div v-if="editingMode === 'topic'">编辑主题</div>
+            </template>
+            <template slot="default">
+                <div v-if="editingMode === 'comment'">
+                    <input
+                        ref="commentAfterEdit"
+                        type="text"
+                        placeholder="评论"
+                        :value="currentEditingComment.content"
+                    />
+                </div>
+                <div v-if="editingMode === 'topic'">
+                    <input
+                        ref="titleAfterEdit"
+                        type="text"
+                        placeholder="标题"
+                        :value="currentEditingTopic.title"
+                    />
+                    <textarea
+                        ref="contentAfterEdit"
+                        type="text"
+                        placeholder="正文"
+                        :value="currentEditingTopic.content"
+                    />
+                </div>
+            </template>
+        </Modal>
     </div>
 </template>
 
@@ -166,24 +197,70 @@ import {
     apiPostComment,
     apiDeleteTopic,
     apiDeletComment,
+    apiUpdateTopic,
+    apiUpdateTopicComment,
 } from '../service';
 import { formatDate } from '../utils';
+import Modal from '../components/Modal.vue';
 
 export default {
+    components: { Modal },
     computed: mapState({
         user: (state) => state.user,
     }),
     data() {
         return {
+            showModal: false,
             defaultAvatarLink,
             item: {},
             comments: [],
             comment: '',
+            editingMode: 'comment', // comment or topic
+            currentEditingComment: {},
+            currentEditingTopic: {},
         };
     },
     methods: {
-        modifyComment(id) {
-            console.log('modifyComment', id);
+        confirm() {
+            if (this.editingMode === 'comment') {
+                const content = this.$refs.commentAfterEdit.value;
+                const id = this.currentEditingComment.id;
+                apiUpdateTopicComment(id, content).then(() => {
+                    alert('更新成功');
+                    this.close();
+                    apiGetComments(this.$route.params.id).then((res) => {
+                        if (res?.data) {
+                            this.comments = res.data;
+                        }
+                    });
+                });
+            } else {
+                const title = this.$refs.titleAfterEdit.value;
+                const content = this.$refs.contentAfterEdit.value;
+                const id = this.currentEditingTopic.id;
+                apiUpdateTopic(id, title, content).then(() => {
+                    alert('更新成功');
+                    this.close();
+                    apiGetTopicDetail(id).then((res) => {
+                        if (res?.data) {
+                            this.item = res.data;
+                        }
+                    });
+                });
+            }
+        },
+        open() {
+            this.showModal = true;
+        },
+        close() {
+            this.showModal = false;
+            this.currentEditingTopic = {};
+            this.currentEditingComment = {};
+        },
+        modifyComment(comment) {
+            this.currentEditingComment = { ...comment };
+            this.editingMode = 'comment';
+            this.open();
         },
         deleteComment(id) {
             const bool = confirm('是否要删除这条评论？');
@@ -200,8 +277,10 @@ export default {
             }
             console.log('deleteComment', id);
         },
-        modifyPost(id) {
-            console.log('modifyPost', id);
+        modifyPost(item) {
+            this.currentEditingTopic = { ...item };
+            this.editingMode = 'topic';
+            this.open();
         },
         deletePost(id) {
             const bool = confirm('是否要删除这篇文章？');

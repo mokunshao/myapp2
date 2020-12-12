@@ -13,6 +13,7 @@
                             <td width="auto" align="left">
                                 <input
                                     v-model="username"
+                                    placeholder="测试用户名：gua"
                                     type="text"
                                     class="sl"
                                     name="username"
@@ -29,6 +30,7 @@
                             <td width="auto" align="left">
                                 <input
                                     v-model="password"
+                                    placeholder="测试密码：123"
                                     type="password"
                                     class="sl"
                                     name="password"

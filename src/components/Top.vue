@@ -6,10 +6,25 @@
                     ><strong>快论坛</strong></a
                 >
                 <div class="tools">
-                    <a @click="$router.push('/login')" class="top">登录</a>
-                    <a @click="$router.push('/register')" class="top">注册</a>
-                    <a @click="$router.push('/settings')" class="top">设置</a>
-                    <a @click="logout" class="top">登出</a>
+                    <a
+                        v-if="!user.id"
+                        @click="$router.push('/login')"
+                        class="top"
+                        >登录</a
+                    >
+                    <a
+                        v-if="!user.id"
+                        @click="$router.push('/register')"
+                        class="top"
+                        >注册</a
+                    >
+                    <a
+                        v-if="user.id"
+                        @click="$router.push('/settings')"
+                        class="top"
+                        >设置</a
+                    >
+                    <a v-if="user.id" @click="logout" class="top">登出</a>
                 </div>
             </div>
         </div>

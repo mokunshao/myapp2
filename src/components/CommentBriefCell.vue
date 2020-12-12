@@ -26,7 +26,9 @@
             </table>
         </div>
         <div class="inner">
-            <div class="reply_content">{{ item.content }}</div>
+            <div class="reply_content" style="white-space:pre-wrap">
+                {{ item.content }}
+            </div>
         </div>
     </div>
 </template>

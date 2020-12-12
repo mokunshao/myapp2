@@ -101,6 +101,7 @@
                                     <div class="sep5"></div>
                                     <div
                                         class="reply_content"
+                                        style="white-space:pre-wrap"
                                         v-text="o.content"
                                     ></div>
                                     <div v-if="o.userId === user.id">

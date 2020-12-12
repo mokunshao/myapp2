@@ -163,8 +163,9 @@
             <template slot="default">
                 <div v-if="editingMode === 'comment'">
                     <div class="cell">
-                        <input
-                            class="sl"
+                        <textarea
+                            rows="4"
+                            class="mll"
                             ref="commentAfterEdit"
                             type="text"
                             placeholder="评论"

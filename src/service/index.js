@@ -9,9 +9,9 @@ axios.interceptors.response.use(
     (response) => response,
     (error) => {
         alert('请求失败');
-        if (error.response.status === 401) {
+        if (error?.response?.status === 401) {
             localSave('user', null);
-            this.$router.push('/login');
+            window.location = '/#/login';
         }
         return error;
     },

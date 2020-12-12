@@ -46,15 +46,21 @@
                         <tbody>
                             <tr>
                                 <td width="48" valign="top" align="center">
-                                    <img
-                                        :src="defaultAvatarLink"
-                                        height="48"
-                                        width="48"
-                                        class="avatar"
-                                        border="0"
-                                        align="default"
-                                        alt="614457662"
-                                    />
+                                    <a
+                                        @click="
+                                            $router.push('/member/' + o.userId)
+                                        "
+                                    >
+                                        <img
+                                            :src="defaultAvatarLink"
+                                            height="48"
+                                            width="48"
+                                            class="avatar"
+                                            border="0"
+                                            align="default"
+                                            alt="614457662"
+                                        />
+                                    </a>
                                 </td>
                                 <td width="10" valign="top"></td>
                                 <td width="auto" valign="top" align="left">
@@ -63,11 +69,17 @@
                                     </div>
                                     <div class="sep3"></div>
                                     <strong
-                                        ><a class="dark">{{
-                                            o.user && o.user.username
-                                        }}</a></strong
+                                        ><a
+                                            class="dark"
+                                            @click="
+                                                $router.push(
+                                                    '/member/' + o.userId,
+                                                )
+                                            "
+                                            >{{ o.user && o.user.username }}</a
+                                        ></strong
                                     >&nbsp; &nbsp;<span class="ago">{{
-                                        o.createdTime
+                                        formatDate(o.createdTime)
                                     }}</span>
                                     <div class="sep5"></div>
                                     <div
@@ -88,29 +100,26 @@
                 <div>添加一条新回复</div>
             </div>
             <div class="cell">
-                <form method="post" action="/t/734347">
-                    <textarea
-                        name="content"
-                        maxlength="10000"
-                        class="mll"
-                        id="reply_content"
-                        onfocus="setReplyBoxSticky();"
-                        style="overflow: hidden; overflow-wrap: break-word; resize: none; height: 112px;"
-                    ></textarea>
-                    <div class="sep10"></div>
-                    <div class="fr">
-                        <div class="sep5"></div>
-                        <span class="gray"
-                            >请尽量让自己的回复能够对别人有帮助</span
-                        >
-                    </div>
-                    <input type="hidden" value="42226" name="once" />
-                    <input
-                        type="submit"
-                        value="回复"
-                        class="super normal button"
-                    />
-                </form>
+                <textarea
+                    v-model="comment"
+                    name="content"
+                    maxlength="10000"
+                    class="mll"
+                    id="reply_content"
+                    style="overflow: hidden; overflow-wrap: break-word; resize: none; height: 112px;"
+                ></textarea>
+                <div class="sep10"></div>
+                <div class="fr">
+                    <div class="sep5"></div>
+                    <span class="gray">请尽量让自己的回复能够对别人有帮助</span>
+                </div>
+                <input type="hidden" value="42226" name="once" />
+                <input
+                    type="submit"
+                    value="回复"
+                    class="super normal button"
+                    @click="postComment"
+                />
             </div>
         </div>
     </div>
@@ -118,7 +127,7 @@
 
 <script>
 import { defaultAvatarLink } from '../settings';
-import { apiGetTopicDetail, apiGetComments } from '../service';
+import { apiGetTopicDetail, apiGetComments, apiPostComment } from '../service';
 import { formatDate } from '../utils';
 
 export default {
@@ -127,6 +136,7 @@ export default {
             defaultAvatarLink,
             item: {},
             comments: [],
+            comment: '',
         };
     },
     methods: {
@@ -135,6 +145,16 @@ export default {
             this.$router.push(
                 '/member/' + (this.item.user && this.item.user.id),
             );
+        },
+        postComment() {
+            apiPostComment(this.$route.params.id, this.comment).then(() => {
+                this.comment = '';
+                apiGetComments(this.$route.params.id).then((res) => {
+                    if (res?.data) {
+                        this.comments = res.data;
+                    }
+                });
+            });
         },
     },
     watch: {

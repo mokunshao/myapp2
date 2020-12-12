@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
+import { localGet } from '../utils';
 import Home from '../views/Home.vue';
 
 Vue.use(VueRouter);
@@ -79,6 +80,21 @@ const routes = [
 
 const router = new VueRouter({
     routes,
+});
+
+router.beforeEach((to, from, next) => {
+    if (to.matched.some((record) => record.meta.requireAuth)) {
+        let isLogin = localGet(user);
+        if (isLogin) {
+            next();
+        } else {
+            next({
+                path: '/login',
+            });
+        }
+    } else {
+        next();
+    }
 });
 
 export default router;

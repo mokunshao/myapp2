@@ -22,7 +22,7 @@
                         item.user && item.user.username
                     }}</a>
                     ·
-                    <span>{{ this.formatDate(item.createdTime) }}</span>
+                    <span>{{ formatDate(item.createdTime) }}</span>
                 </small>
             </div>
             <div class="cell">
@@ -31,6 +31,22 @@
                     v-text="item.content"
                     style="white-space:pre-wrap"
                 ></div>
+                <div v-if="item.userId === user.id">
+                    <br />
+                    <input
+                        type="button"
+                        value="删除"
+                        class="super normal button"
+                        @click="deletePost(item.id)"
+                    />
+                    &nbsp;&nbsp;
+                    <input
+                        type="button"
+                        value="编辑"
+                        class="super normal button"
+                        @click="modifyPost(item.id)"
+                    />
+                </div>
             </div>
         </div>
         <div class="sep20"></div>
@@ -86,6 +102,22 @@
                                         class="reply_content"
                                         v-text="o.content"
                                     ></div>
+                                    <div v-if="o.userId === user.id">
+                                        <br />
+                                        <input
+                                            type="button"
+                                            value="删除"
+                                            class="super normal button"
+                                            @click="deleteComment(o.id)"
+                                        />
+                                        &nbsp;&nbsp;
+                                        <input
+                                            type="button"
+                                            value="编辑"
+                                            class="super normal button"
+                                            @click="modifyComment(o.id)"
+                                        />
+                                    </div>
                                 </td>
                             </tr>
                         </tbody>
@@ -126,11 +158,21 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
 import { defaultAvatarLink } from '../settings';
-import { apiGetTopicDetail, apiGetComments, apiPostComment } from '../service';
+import {
+    apiGetTopicDetail,
+    apiGetComments,
+    apiPostComment,
+    apiDeleteTopic,
+    apiDeletComment,
+} from '../service';
 import { formatDate } from '../utils';
 
 export default {
+    computed: mapState({
+        user: (state) => state.user,
+    }),
     data() {
         return {
             defaultAvatarLink,
@@ -140,6 +182,37 @@ export default {
         };
     },
     methods: {
+        modifyComment(id) {
+            console.log('modifyComment', id);
+        },
+        deleteComment(id) {
+            const bool = confirm('是否要删除这条评论？');
+            if (bool) {
+                apiDeletComment(id).then((res) => {
+                    if (res.status === 200) {
+                        apiGetComments(this.$route.params.id).then((res) => {
+                            if (res?.data) {
+                                this.comments = res.data;
+                            }
+                        });
+                    }
+                });
+            }
+            console.log('deleteComment', id);
+        },
+        modifyPost(id) {
+            console.log('modifyPost', id);
+        },
+        deletePost(id) {
+            const bool = confirm('是否要删除这篇文章？');
+            if (bool) {
+                apiDeleteTopic(id).then((res) => {
+                    if (res.status === 200) {
+                        this.$router.push('/');
+                    }
+                });
+            }
+        },
         formatDate,
         goToUserPage() {
             this.$router.push(

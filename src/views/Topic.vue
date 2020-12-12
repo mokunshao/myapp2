@@ -147,14 +147,18 @@ export default {
             );
         },
         postComment() {
-            apiPostComment(this.$route.params.id, this.comment).then(() => {
-                this.comment = '';
-                apiGetComments(this.$route.params.id).then((res) => {
-                    if (res?.data) {
-                        this.comments = res.data;
-                    }
+            if (this.comment) {
+                apiPostComment(this.$route.params.id, this.comment).then(() => {
+                    this.comment = '';
+                    apiGetComments(this.$route.params.id).then((res) => {
+                        if (res?.data) {
+                            this.comments = res.data;
+                        }
+                    });
                 });
-            });
+            } else {
+                alert('请输入评论');
+            }
         },
     },
     watch: {

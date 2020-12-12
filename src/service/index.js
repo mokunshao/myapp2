@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { localSave } from '../utils';
 import { url } from './constants';
+import router from '../router/index';
 
 axios.defaults.baseURL = url;
 axios.defaults.withCredentials = true;
@@ -11,7 +12,8 @@ axios.interceptors.response.use(
         alert('请求失败');
         if (error?.response?.status === 401) {
             localSave('user', null);
-            window.location = '/#/login';
+            router.push('/login');
+            // window.location = '/#/login';
         }
         return error;
     },

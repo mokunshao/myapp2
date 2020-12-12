@@ -18,6 +18,8 @@
 
 <script>
 import { mapState } from 'vuex';
+import { localRemove } from '../utils';
+import { apiLogout } from '../service';
 
 export default {
     computed: mapState({
@@ -25,7 +27,9 @@ export default {
     }),
     methods: {
         logout() {
-            console.log('logout 123');
+            localRemove('user');
+            apiLogout();
+            location.reload();
         },
     },
 };

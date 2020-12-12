@@ -162,26 +162,35 @@
             </template>
             <template slot="default">
                 <div v-if="editingMode === 'comment'">
-                    <input
-                        ref="commentAfterEdit"
-                        type="text"
-                        placeholder="评论"
-                        :value="currentEditingComment.content"
-                    />
+                    <div class="cell">
+                        <input
+                            class="sl"
+                            ref="commentAfterEdit"
+                            type="text"
+                            placeholder="评论"
+                            :value="currentEditingComment.content"
+                        />
+                    </div>
                 </div>
                 <div v-if="editingMode === 'topic'">
-                    <input
-                        ref="titleAfterEdit"
-                        type="text"
-                        placeholder="标题"
-                        :value="currentEditingTopic.title"
-                    />
-                    <textarea
-                        ref="contentAfterEdit"
-                        type="text"
-                        placeholder="正文"
-                        :value="currentEditingTopic.content"
-                    />
+                    <div class="cell">
+                        <input
+                            class="sl"
+                            ref="titleAfterEdit"
+                            type="text"
+                            placeholder="标题"
+                            :value="currentEditingTopic.title"
+                        />
+                        <div style="height:5px" />
+                        <textarea
+                            rows="4"
+                            class="mll"
+                            ref="contentAfterEdit"
+                            type="text"
+                            placeholder="正文"
+                            :value="currentEditingTopic.content"
+                        />
+                    </div>
                 </div>
             </template>
         </Modal>

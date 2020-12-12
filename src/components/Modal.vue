@@ -36,7 +36,7 @@
     overflow-x: auto;
     display: flex;
     flex-direction: column;
-    width: 500px;
+    /* width: 500px; */
 }
 .modal-header {
     border-bottom: 1px solid #eee;
@@ -53,7 +53,7 @@
 }
 .modal-body {
     position: relative;
-    padding: 20px 10px;
+    /* padding: 20px 10px; */
 }
 .btn-close,
 .btn-confirm {
